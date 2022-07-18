@@ -19,22 +19,22 @@ const licenseArray = ['Apache 2.0','Boost 1.0','BSD 3-Clause','BSD 2-Clause','CC
 /* ****************************** */
 const questions = [
   {
-    type: 'input',
     name: 'projectTitle',
     message: 'What is your project title?',
   },
   {
-    type: 'input',
     name: 'projectDescription',
     message: `What's a short description of your project?`
   },
   {
-    type: 'input',
+    name: 'githubUsername',
+    message: `What's your GitHub username?`
+  },
+  {
     name: 'installationInstructions',
     message: `How would a user install your project?`
   },
   {
-    type: 'input',
     name: 'projectUsage',
     message: `What would this project be used for?`
   },
@@ -45,21 +45,17 @@ const questions = [
     choices: licenseArray,
   },
   {
-    type: 'input',
     name: 'contributors',
     message: `Who else helped / contributed to this project?`
   },
   {
-    type: 'input',
     name: 'testCommand',
     message: `What would a user run to test the project?`
   },
   {
-    type: 'input',
-    name: 'contactInfo',
-    message: `How could a user contact you if they had questions?`
+    name: 'emailAddress',
+    message: `What's your email address?`
   },
-
 ];
 
 
@@ -86,9 +82,11 @@ const inquirerFunct = () => {
   inquirer.prompt(questions)
   .then((answers) => {
     console.log(answers);
-    console.log(licenseArrayIndexFunc(answers.licenseChoice));
+
+    let licenseIndex = licenseArray.indexOf(answers.licenseChoice);
+
     let fileName = 'testme.md';
-    let markdownData = inputToREADME.dataChewer(answers);
+    let markdownData = inputToREADME.dataChewer(answers, licenseIndex);
     writeFile(fileName, markdownData);
   })
   .catch((error) => {
