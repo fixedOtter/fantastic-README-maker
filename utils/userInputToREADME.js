@@ -8,15 +8,17 @@
 
 const dungPointOh = {
   // this is the main data chewer to get the userInput to README.md
-  dataChewer: (userData) => {
+  dataChewer: (userData, licenseIndex) => {
     /* declarations */
     // file stuff declarations
     let fileData, directory;
     // license stuff
     let licenseBadge, licenseData;
 
+    console.log('data chewer called');
+
     // use switch my homie
-    switch (licenseArray.indexOf(fileData.licenseChoice)) {
+    switch (licenseIndex) {
       case 0:
         licenseBadge = `[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)`;
         break;
@@ -80,25 +82,86 @@ const dungPointOh = {
       case 20:
         licenseBadge = `[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg)](https://opensource.org/licenses/ISC)`;
         break;
-
+      case 21:
+        licenseBadge = `[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)`;
+        break;
+      case 22:
+        licenseBadge = `[![License: MPL 2.0](https://img.shields.io/badge/License-MPL_2.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)`;
+        break;
+      case 23:
+        licenseBadge = `[![License: Open Data Commons Attribution](https://img.shields.io/badge/License-ODC_BY-brightgreen.svg)](https://opendatacommons.org/licenses/by/)`;
+        break;
+      case 24:
+        licenseBadge = `[![License: ODbL](https://img.shields.io/badge/License-ODbL-brightgreen.svg)](https://opendatacommons.org/licenses/odbl/)`;
+        break;
+      case 25:
+        licenseBadge = `[![License: ODbL](https://img.shields.io/badge/License-PDDL-brightgreen.svg)](https://opendatacommons.org/licenses/pddl/)`;
+        break;
+      case 26:
+        licenseBadge = `[![License: Artistic-2.0](https://img.shields.io/badge/License-Perl-0298c3.svg)](https://opensource.org/licenses/Artistic-2.0)`;
+        break;
+      case 27:
+        licenseBadge = `[![License: Artistic-2.0](https://img.shields.io/badge/License-Artistic_2.0-0298c3.svg)](https://opensource.org/licenses/Artistic-2.0)`;
+        break;
+      case 28:
+        licenseBadge = `[![License: Open Font-1.1](https://img.shields.io/badge/License-OFL_1.1-lightgreen.svg)](https://opensource.org/licenses/OFL-1.1)`;
+        break;
+      case 29:
+        licenseBadge = `[![License: Unlicense](https://img.shields.io/badge/license-Unlicense-blue.svg)](http://unlicense.org/)`;
+        break;
+      case 30:
+        licenseBadge = `[![License: WTFPL](https://img.shields.io/badge/License-WTFPL-brightgreen.svg)](http://www.wtfpl.net/about/)`;
+        break;
+      case 31:
+        licenseBadge = `[![License: Zlib](https://img.shields.io/badge/License-Zlib-lightgrey.svg)](https://opensource.org/licenses/Zlib)`;
+        break;
       default:
+        licenseBadge = `https://img.shields.io/badge/unlicensed-unlicensed-critical`;
         break;
     }
 
-    fileData = `
-    # ${userData.projectTitle}
-    ${userData.projectDescription}
+    console.log('it made it through the switch');
 
-    ## Installation Instructions
-    ${userData.installationInstructions}
+    fileData = 
+`# ${userData.projectTitle}
+${licenseBadge}
 
-    ## Project Uses
-    ${userData.projectUsage}
+## Project Description
+${userData.projectDescription}
 
-    ## TESTING
+## Table of Contents
+* [License](#license)
+* [Installation](#installation)
+* [Usage](#usage)
+* [Contributors](#contributors)
+* [Testing the Project](#tests)
 
+## License
+> This project was licened with ${userData.licenseChoice}
 
-    `;
+## Installation Instructions
+When installing the project, make sure to run this command:
+\`\`\`
+${userData.installationInstructions}
+\`\`\`
+
+## Project Uses
+${userData.projectUsage}
+
+## Contributors
+Many thanks to ${userData.contributors}, who contributed to this project
+
+## Tests
+To test this project, please run the following:
+\`\`\`
+${userData.testCommand}
+\`\`\`
+
+## Questions?
+Here's how you can contact me with any questions you have!
+> [Email](mailto:${userData.contactInfo})
+> [GitHub (${userData.githubUsername})](https://github.com/${userData.githubUsername})
+`;
 
     console.log(`dataChewer called and fileData = ${fileData}`);
 
@@ -106,8 +169,5 @@ const dungPointOh = {
   }
   
 }
-
-/* lol this is getting the index */
-const licenseArrayIndexFunc = (licenseChoice) => {return licenseArray.indexOf(licenseChoice)};
 
 export let inputToREADME = dungPointOh;
