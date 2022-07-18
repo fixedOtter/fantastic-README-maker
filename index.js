@@ -62,8 +62,7 @@ const questions = [
 
 ];
 
-/* lol this is getting the index */
-const licenseArrayIndexFunc = (licenseChoice) => {return licenseArray.indexOf(licenseChoice)};
+
 
 /* this is the function to write to the file */
 function writeFile(fileName, data) {
