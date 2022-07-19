@@ -20,29 +20,32 @@ const licenseArray = ['Apache 2.0','Boost 1.0','BSD 3-Clause','BSD 2-Clause','CC
 const questions = [
   {
     name: 'projectTitle',
-    message: 'What is your project title?',
+    message: 'What is the title of your project?',
   },
   {
     name: 'projectDescription',
-    message: `What's a short description of your project?`
+    message: `Please provide a short description of your project`
   },
   {
     name: 'githubUsername',
-    message: `What's your GitHub username?`
+    message: `What's your GitHub username?`,
+    default: `fixedOtter`
   },
   {
     name: 'installationInstructions',
-    message: `How would a user install your project?`
+    message: `What command should a user run after installing?`,
+    default: `node i`
   },
   {
     name: 'projectUsage',
-    message: `What would this project be used for?`
+    message: `What is the intended use case for this project?`
   },
   {
     type: 'list',
     name: 'licenseChoice',
     message: `What license do you want to use?`,
     choices: licenseArray,
+    default: 'GPL v3'
   },
   {
     name: 'contributors',
@@ -50,53 +53,68 @@ const questions = [
   },
   {
     name: 'testCommand',
-    message: `What would a user run to test the project?`
+    message: `What would a user run to test the project?`,
+    default: `npm test`
   },
   {
     name: 'emailAddress',
-    message: `What's your email address?`
+    message: `What's your email address?`,
+    default: `fo1152rc@go.minnstate.edu`
   },
+  {
+    name: 'fileName',
+    message: `What do you want to name the file?`,
+    default: `README`
+  },
+  // NTH: get user input for where to store the file
+  // NTH: get screenshot??
 ];
 
 
-
+/* ***************************************** */
 /* this is the function to write to the file */
+/* ***************************************** */
 function writeFile(fileName, data) {
-  console.log(`writeFile called and fileName = ${fileName} and data = ${data}`);
+  // NTH: add some filename validation so we don't overwrite anything?
 
+  // TODO: add cli spinner for like three seconds saying it's making the file
+
+  // actually the part writing to the file
   fs.writeFile(fileName, data, (err) => 
-    // TODO: Describe how this ternary operator works
-  
-    // add a cli spinner before complete right?
+    // if an error occurs, it will be rendered to console - if not, it will log that the README has been generated
     err ? console.error(err) : console.log('README has been generated! :)')
   );
 }
 
-/* why does this */
-function init() {
-  inquirerFunct();
-}
-
-/* essentially main.js since  */
+/* ************************************************************* */
+/* starts inquirer for userInput and passes to create the readme */
+/* ************************************************************* */
 const inquirerFunct = () => {
+  // first prompting the user with the questions array
   inquirer.prompt(questions)
+  // then doing stuff with the data
   .then((answers) => {
-    console.log(answers);
-
+    // declaring variables from the answers
     let licenseIndex = licenseArray.indexOf(answers.licenseChoice);
-
-    let fileName = 'testme.md';
+    let fileName = `${answers.fileName}.md`;
+    // passing to the dataChewer to process the userInput and make a markdownData string
     let markdownData = inputToREADME.dataChewer(answers, licenseIndex);
+    // writing to our user defined filename with user defined markdownData
     writeFile(fileName, markdownData);
   })
+  // this is catching any errors that occur
   .catch((error) => {
     if (error.isTtyError) {
-      // Prompt couldn't be rendered in the current environment
+      // issue with rendering the prompt in current environment (thanks manpages)
+      console.error(`ERROR! The question prompt couldn't be rendered! ERROR: ${error}`);
     } else {
-      // Something else went wrong
+      // catchall because I'm not making elaborate error logic lol
+      console.error(`ERROR! ${error}`);
     }
   });
 }
-  
-/* does this make sense to do? i don't like it */
-init();
+
+/* ************************* */
+/* this starts the main func */
+/* ************************* */
+inquirerFunct();
