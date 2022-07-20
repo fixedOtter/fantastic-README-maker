@@ -66,6 +66,20 @@ const questions = [
     message: `What do you want to name the file?`,
     default: `README`
   },
+  {
+    type: 'confirm',
+    name: 'dirBool',
+    message: `Do you want to save this file to another directory?`,
+  },
+  {
+    type: 'list',
+    name: 'chosenDir',
+    message: `Please pick from your list of favorites:`,
+    choices: ['homeworkProjects','Desktop', 'nodeJS'],
+    when(answers) {
+      return answers.dirBool;
+    }
+  },
   // NTH: get user input for where to store the file
   // NTH: get screenshot??
 ];
