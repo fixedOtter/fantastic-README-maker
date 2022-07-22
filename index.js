@@ -8,11 +8,13 @@
 import { inputToREADME } from './utils/userInputToREADME.js';
 import inquirer from 'inquirer';
 import fs from 'fs';
+import path from 'path';
 
 /* ************ */
 /* declarations */
 /* ************ */
 const licenseArray = ['Apache 2.0','Boost 1.0','BSD 3-Clause','BSD 2-Clause','CC0','Attribution 4.0','Attribution-ShareAlike 4.0','Attribution-NonCommercial 4.0','Attribution-NoDerivates 4.0','Attribution-NonCommmercial-ShareAlike 4.0','Attribution-NonCommercial-NoDerivatives 4.0','Eclipse 1.0','GPL v3','GPL v2','AGPL v3','LGPL v3','FDL v1.3','Hippocratic 2.1','Hippocratic 3.0','IBM Public 1.0','ISC License (ISC)','The MIT License','Mozilla Public 2.0','Attribution License (BY)','Open Database License (ODbL)','Public Domain Dedication and License (PDDL)','Perl License','Artistic 2.0','SIL Open Font License 1.1','The Unlicense','The Do What the Fuck You Want to Public License','The zlib/libpng License'];
+let savedDirectory = '';
 
 /* ****************************** */
 /* this is the array of questions */
@@ -33,7 +35,7 @@ const questions = [
   },
   {
     name: 'installationInstructions',
-    message: `What command should a user run after installing?`,
+    message: `What command should a user run after downloading?`,
     default: `node i`
   },
   {
@@ -61,6 +63,12 @@ const questions = [
     message: `What's your email address?`,
     default: `fo1152rc@go.minnstate.edu`
   },
+/*   {
+    type: 'confirm',
+    name: 'emojiBool',
+    message: `Do you want to include emojis?`,
+    default: 'Y',
+  }, */
   {
     name: 'fileName',
     message: `What do you want to name the file?`,
@@ -73,14 +81,21 @@ const questions = [
   },
   {
     type: 'list',
-    name: 'chosenDir',
+    name: 'workingDir',
     message: `Please pick from your list of favorites:`,
     choices: ['homeworkProjects','Desktop', 'nodeJS'],
+    default: 'homeworkProjects',
     when(answers) {
       return answers.dirBool;
     }
   },
-  // NTH: get user input for where to store the file
+  {
+    name: 'folderName',
+    message: 'What folder name would you like it in?',
+    when(answers) {
+      return answers.workingDir;
+    }
+  },
   // NTH: get screenshot??
 ];
 
@@ -91,7 +106,7 @@ const questions = [
 function writeFile(fileName, data) {
   // NTH: add some filename validation so we don't overwrite anything?
 
-  // TODO: add cli spinner for like three seconds saying it's making the file
+  // NTH: add cli spinner for like three seconds saying it's making the file B)
 
   // actually the part writing to the file
   fs.writeFile(fileName, data, (err) => 
@@ -113,8 +128,31 @@ const inquirerFunct = () => {
     let fileName = `${answers.fileName}.md`;
     // passing to the dataChewer to process the userInput and make a markdownData string
     let markdownData = inputToREADME.dataChewer(answers, licenseIndex);
-    // writing to our user defined filename with user defined markdownData
-    writeFile(fileName, markdownData);
+
+    // this is probably a chunky way to do it
+    if (answers.dirBool) {
+      // writeFile to certain place boii
+      switch (answers.workingDir) {
+        case 'homeworkProjects':
+          savedDirectory = '/home/gungun/Documents/learning/gitLab';
+          break;
+        case 'Desktop':
+          savedDirectory = '/home/gungun/Desktop';
+          break;
+        case 'nodeJS':
+          savedDirectory = '/home/gungun/Documents/learning/nodeJS';
+          break;
+        default:
+          savedDirectory = '/home/gungun/Desktop';
+          break;
+      }
+      // actually do the filesaving
+      fs.writeFileSync(path.join(savedDirectory,answers.folderName,fileName), markdownData);
+    } else {
+      // just writeFile normally
+      // writing to our user defined filename with user defined markdownData
+      writeFile(fileName, markdownData);
+    }
   })
   // this is catching any errors that occur
   .catch((error) => {
