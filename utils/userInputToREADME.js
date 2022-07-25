@@ -9,10 +9,10 @@ import { parsedLicense } from "./licenseParser.js";
 /* **** */
 const decentSnack = {
   /* this is the main data chewer to get the userInput to README.md */
-  dataChewer: ({projectTitle, projectDescription, githubUsername, installationInstructions, projectUsage, licenseChoice, contributors, testCommand, emailAddress, emojiBool}, licenseIndex) => {
+  dataChewer: ({projectTitle, projectDescription, githubUsername, installationInstructions, projectUsage, licenseChoice, contributors, testCommand, emailAddress, emojiBool, screenshotBool}, licenseIndex) => {
     /* declarations */
     // the actual file data
-    let fileData;
+    let fileData, screenshotText;
     // license stuff (moved to another js file because I was sick of looking at that switch)
     let [licenseBadge, licenseLink] = parsedLicense.licenseEater(licenseIndex);
 
@@ -29,6 +29,15 @@ const decentSnack = {
     } 
     with ${emojiArray[i]} in fileData
     */
+
+    if (screenshotBool) {
+      screenshotText = `
+## Screenshot(s)
+![Screenshot of deployed](assets/screenshot.png)
+`
+    } else {
+      screenshotText = '';
+    }
 
     // sexy mama
     /* I have to mess up the whitespace with this otherwise it will capture the indents in the readme */
@@ -48,7 +57,7 @@ ${projectDescription}
 
 ## License
 This project was licened with ${licenseChoice}. [Here's a link  to license information](${licenseLink})
-
+${screenshotText}
 ## Installation Instructions 
 When installing the project, make sure to run this command:
 \`\`\`

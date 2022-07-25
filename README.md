@@ -26,12 +26,6 @@ To create fantastic README's
 ## Contributors
 Many thanks to Troy & Odin, who contributed to this project
 
-## Tests
-To test this project, please run the following:
-```
-npm test
-```
-
 ## Questions?
 Here's how you can contact me with any questions you may have!
 * [Email](mailto:fo1152rc@go.minnstate.edu)

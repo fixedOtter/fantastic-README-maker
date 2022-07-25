@@ -63,6 +63,12 @@ const questions = [
     message: `What's your email address?`,
     default: `fo1152rc@go.minnstate.edu`
   },
+  {
+    type: 'confirm',
+    name: 'screenshotBool',
+    message: `Do you want to include a screenshot section?`,
+    default: 'Y'
+  },
 /*   {
     type: 'confirm',
     name: 'emojiBool',
