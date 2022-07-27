@@ -50,7 +50,7 @@ ${projectDescription}
 
 ## Table of Contents
 > * [License](#license)
-> * [Installation](#installation)
+> * [Installation Instructions](#installation)
 > * [Project Usage](#usage)
 > * [Contributors](#contributors)
 > * [Testing the Project](#tests)
@@ -58,13 +58,13 @@ ${projectDescription}
 ## License
 This project was licened with ${licenseChoice}. [Here's a link  to license information](${licenseLink})
 ${screenshotText}
-## Installation Instructions 
+## Installation 
 When installing the project, make sure to run this command:
 \`\`\`
 ${installationInstructions}
 \`\`\`
 
-## Project Use 
+## Usage 
 ${projectUsage}
 
 ## Contributors
