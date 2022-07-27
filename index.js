@@ -36,7 +36,7 @@ const questions = [
   {
     name: 'installationInstructions',
     message: `What command should a user run after downloading?`,
-    default: `node i`
+    default: `npm i`
   },
   {
     name: 'projectUsage',
