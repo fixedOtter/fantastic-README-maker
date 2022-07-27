@@ -16,7 +16,7 @@ This project was licened with GPL v3. [Here's a link to license information](htt
 ## Installation
 When installing the project, make sure to run this command:
 ```
-node i
+npm i
 ```
 
 ## Usage
