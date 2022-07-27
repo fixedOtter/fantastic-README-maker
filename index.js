@@ -90,7 +90,7 @@ const questions = [
     name: 'workingDir',
     message: `Please pick from your list of favorites:`,
     choices: ['homeworkProjects','Desktop', 'nodeJS'],
-    default: 'homeworkProjects',
+    default: 'nodeJS',
     when(answers) {
       return answers.dirBool;
     }
@@ -140,13 +140,13 @@ const inquirerFunct = () => {
       // writeFile to certain place boii
       switch (answers.workingDir) {
         case 'homeworkProjects':
-          savedDirectory = '/home/gungun/Documents/learning/gitLab';
+          savedDirectory = '/home/gungun/Documents/learning/gitLab/homeworkProjects';
           break;
         case 'Desktop':
           savedDirectory = '/home/gungun/Desktop';
           break;
         case 'nodeJS':
-          savedDirectory = '/home/gungun/Documents/learning/nodeJS';
+          savedDirectory = '/home/gungun/Documents/learning/gitLab/homeworkProjects/nodeJS';
           break;
         default:
           savedDirectory = '/home/gungun/Desktop';
@@ -155,7 +155,7 @@ const inquirerFunct = () => {
       // actually do the filesaving
       fs.writeFileSync(path.join(savedDirectory,answers.folderName,fileName), markdownData);
     } else {
-      // just writeFile normally
+      // just writeFile locally
       // writing to our user defined filename with user defined markdownData
       writeFile(fileName, markdownData);
     }
